@@ -16,10 +16,27 @@ const getWeatherTool = tool({
 	},
 });
 
+// TODO: Add more tools to the agent specially email tool to sent the weather report to the recommended user email address in this case use Resend API to send the email.
+
+const sendEmailTool = tool({
+	name: 'send-email',
+	description: 'Sends an email with the given subject and body to the specified recipient.',
+	parameters: z.object({
+		recipient: z.string().describe('The email address of the recipient.'),
+		subject: z.string().describe('The subject of the email.'),
+		body: z.string().describe('The body of the email.'),
+	}),
+	async execute({ recipient, subject, body }) {
+		// Implement the logic to send an email using Resend API or any email service provider.
+		// For example, you can use axios to make a POST request to the Resend API endpoint with the email details.
+		console.log(`Email sent to ${recipient} with subject "${subject}" and body "${body}".`);
+	},
+});
+
 const agent = new Agent({
 	name: 'Weather Agent',
 	instructions: `You are an expert weather agent that helps users to tell weather report.`,
-	tools: [getWeatherTool],
+	tools: [getWeatherTool, sendEmailTool],
 });
 
 async function getWeatherReport(query = '') {
@@ -27,4 +44,4 @@ async function getWeatherReport(query = '') {
 	console.log(`Weather report: `, result.finalOutput);
 }
 
-getWeatherReport('What is the weather like in germany berlin?');
+getWeatherReport('Extract the weather information of germany berlin,  switzerland and austria. Then send the weather report to my email address');
