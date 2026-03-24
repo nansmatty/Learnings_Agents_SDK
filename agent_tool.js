@@ -3,6 +3,12 @@ import { Agent, run, tool } from '@openai/agents';
 import { z } from 'zod';
 import axios from 'axios';
 
+const GetWeatherResultSchema = z.object({
+	location: z.string().describe('The location for which the weather report is generated.'),
+	weather: z.string().describe('The degree celcius in the specified location.'),
+	condition: z.string().optional().describe('The weather condition, e.g., sunny, rainy, etc.'),
+});
+
 const getWeatherTool = tool({
 	name: 'get-weather',
 	description: 'Returns the current weather report for a given location.',
@@ -37,6 +43,7 @@ const agent = new Agent({
 	name: 'Weather Agent',
 	instructions: `You are an expert weather agent that helps users to tell weather report.`,
 	tools: [getWeatherTool, sendEmailTool],
+	outputType: GetWeatherResultSchema,
 });
 
 async function getWeatherReport(query = '') {
@@ -44,4 +51,4 @@ async function getWeatherReport(query = '') {
 	console.log(`Weather report: `, result.finalOutput);
 }
 
-getWeatherReport('Extract the weather information of germany berlin,  switzerland and austria. Then send the weather report to my email address');
+getWeatherReport('Extract the weather information of switzerland and austria.');
