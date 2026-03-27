@@ -54,4 +54,4 @@ async function runAgent(query = '') {
 }
 
 // Example usage
-runAgent('Hey there, I had a plan 599. I need a refund right now. My cutomer id is cus_123 because of I am shifiting to another city.');
+runAgent('Hey there, I had a plan 599. I need a refund right now. My customer id is cus_123 because of I am shifiting to another city.');
