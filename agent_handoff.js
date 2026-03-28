@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Agent } from '@openai/agents';
+import { Agent, run, tool } from '@openai/agents';
 import { z } from 'zod';
 import fs from 'node:fs/promises';
 
@@ -57,5 +57,15 @@ const receptionAgent = new Agent({
 	instructions: 'You are the customer facing agent expert in understanding the customer query and routing it to the correct department.',
 	handoffDescription: `You have two agents available:
   1. Sales Agent: Expert in handling sales related queries and fetching available plans.
-  2. Refund Agent: Expert in handling refund requests for existing customers.`,
+  2. Refund Agent: Expert in handling refund requests for existing customers.`.trimStart(),
+
+	handoffs: [salesAgent, refundAgent],
 });
+
+async function main(query = '') {
+	const result = await run(receptionAgent, query);
+	console.log('Reception Agent Response:', result.finalOutput);
+	console.log('History', result.history);
+}
+
+main('Hey there, I am customer having id cus_1234 and I want to have a refund request because I am slow internet speed.');
