@@ -46,10 +46,11 @@ async function main(q = '') {
 
 		sharedHistory = result.history;
 
-		console.log('Final output: ', result.finalOutput);
+		console.log('Final output:', result.finalOutput);
 	} catch (error) {
 		console.error('Error:', error);
 	}
 }
 
-main('Hi, my name is John Doe').then(() => main('Get me all the users with my name'));
+await main('Hi, my name is John Doe');
+await main('Get me all the users with my name');
