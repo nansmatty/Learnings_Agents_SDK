@@ -94,4 +94,4 @@ async function getWeatherReport(query = '') {
 	}
 }
 
-getWeatherReport('Extract the weather information of germany and sweden and send me on narayanmaitysp1997@gmail.com');
+getWeatherReport('Extract the weather information of netherlands and and send me on narayanmaitysp1997@gmail.com');
